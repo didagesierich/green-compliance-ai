@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GreenCompliance AI</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+      color: #000;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px 40px;
+    }
+    .header, .section {
+      border: 1px solid #000;
+      padding: 20px;
+      margin-bottom: 18px;
+      background: #fff;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+    .subtitle { margin: 0; font-size: 16px; }
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    select, textarea {
+      width: 100%;
+      border: 1px solid #000;
+      background: #fff;
+      color: #000;
+      padding: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      border-radius: 0;
+      outline: none;
+    }
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    button {
+      background: #1f9d45;
+      color: #fff;
+      border: 1px solid #000;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.92; }
+    .muted {
+      font-size: 13px;
+      color: #222;
+      margin-top: 8px;
+    }
+    .output-block { margin-bottom: 20px; }
+    .output-heading {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .risk-badge {
+      display: inline-block;
+      border: 1px solid #000;
+      padding: 4px 10px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+    li { margin-bottom: 6px; }
+    .source-card {
+      border: 1px solid #000;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .source-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .source-meta {
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .source-snippet {
+      margin: 0;
+      font-size: 13px;
+    }
+    .empty-note {
+      font-size: 14px;
+      margin: 0;
+    }
+    @media (max-width: 640px) {
+      .container { margin: 20px auto; padding: 0 14px 24px; }
+      .header, .section { padding: 16px; }
+      h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>GreenCompliance AI</h1>
+      <p class="subtitle">AI tool for environmental compliance guidance.</p>
+    </header>
+
+    <section class="section">
+      <h2 class="section-title">Section 1 – Industry selection</h2>
+      <label for="industry">Select industry</label>
+      <select id="industry" name="industry">
+        <option value="Construction">Construction</option>
+        <option value="Restaurant">Restaurant</option>
+      </select>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Section 2 – Business description</h2>
+      <label for="description">Business activity</label>
+      <textarea id="description" name="description" placeholder="Describe the business activity..."></textarea>
+      <p class="muted">This version does basic rule retrieval from a built-in regulation dataset for hackathon demo purposes.</p>
+      <p class="muted"><strong>Demo examples:</strong> Construction: “We renovate old buildings and remove concrete walls.” Restaurant: “We dispose cooking oil and grease from the kitchen fryer.” Restaurant delivery: “We run takeaway and delivery with lots of plastic packaging and cardboard.”</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Section 3 – Analyze button</h2>
+      <button id="analyzeBtn">Analyze Compliance Risks</button>
+    </section>
+
+    <section class="section" id="outputPanel">
+      <h2 class="section-title">Section 4 – Output panel</h2>
+
+      <div class="output-block">
+        <h3 class="output-heading">Risk level</h3>
+        <div class="risk-badge" id="riskLevel">Not analyzed</div>
+      </div>
+
+      <div class="output-block">
+        <h3 class="output-heading">Issues detected</h3>
+        <ul id="issuesList">
+          <li>Run the analysis to see relevant compliance issues.</li>
+        </ul>
+      </div>
+
+      <div class="output-block">
+        <h3 class="output-heading">Recommendations</h3>
+        <ul id="recommendationsList">
+          <li>Provide a business description and analyze the activity.</li>
+        </ul>
+      </div>
+
+      <div class="output-block">
+        <h3 class="output-heading">Relevant regulatory sources</h3>
+        <div id="sourcesPanel">
+          <p class="empty-note">No sources retrieved yet.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const regulations = [
+      {
+        id: 'C1',
+        industry: 'Construction',
+        title: 'Construction and demolition waste separation',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['construction', 'demolition', 'waste', 'concrete', 'brick', 'renovation', 'separation', 'site', 'remove', 'tear', 'down', 'debris'],
+        issue: 'Construction and demolition waste may need separation before disposal.',
+        recommendation: 'Set up waste sorting for concrete, metals, wood, and mixed debris.',
+        riskWeight: 2,
+        snippet: 'Construction activities often trigger waste sorting and record-keeping obligations, especially for demolition and renovation work.'
+      },
+      {
+        id: 'C2',
+        industry: 'Construction',
+        title: 'Hazardous material screening before works',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['asbestos', 'paint', 'solvent', 'hazardous', 'old', 'building', 'renovation', 'insulation', 'demolition', 'fibers', 'lead', 'contaminated'],
+        issue: 'Old buildings may contain hazardous materials that require controlled handling.',
+        recommendation: 'Screen the site for asbestos, treated materials, solvents, and other hazardous substances before removal.',
+        riskWeight: 3,
+        snippet: 'Renovation or demolition in older structures can involve hazardous materials that require special handling, transport, and disposal.'
+      },
+      {
+        id: 'C3',
+        industry: 'Construction',
+        title: 'Waste disposal documentation',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['records', 'documentation', 'transport', 'disposal', 'contractor', 'skip', 'waste', 'receipt', 'carrier', 'log'],
+        issue: 'Waste disposal records may be missing or incomplete.',
+        recommendation: 'Keep disposal receipts, carrier details, and waste transfer records for each waste stream.',
+        riskWeight: 2,
+        snippet: 'Traceable disposal documentation is commonly required to show that waste was handled by authorized operators.'
+      },
+      {
+        id: 'C4',
+        industry: 'Construction',
+        title: 'Dust and particle emission control',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['dust', 'particle', 'cutting', 'drilling', 'grinding', 'cement', 'air', 'powder'],
+        issue: 'Dust emissions from cutting or demolition work may require mitigation measures.',
+        recommendation: 'Use dust suppression methods, enclosed cutting tools, and cleaning procedures for particulate control.',
+        riskWeight: 2,
+        snippet: 'Cutting, drilling, and demolition work can generate airborne dust that may require containment or suppression.'
+      },
+      {
+        id: 'C5',
+        industry: 'Construction',
+        title: 'On-site storage of chemicals and fuels',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['fuel', 'diesel', 'chemical', 'paint', 'storage', 'container', 'spill', 'generator', 'lubricant'],
+        issue: 'Improper on-site storage of chemicals or fuels may create spill and contamination risks.',
+        recommendation: 'Store chemicals and fuels in labeled containers with secondary containment and inspection routines.',
+        riskWeight: 3,
+        snippet: 'Construction sites using fuels, coatings, and chemical products may need spill prevention and secure storage measures.'
+      },
+      {
+        id: 'C6',
+        industry: 'Construction',
+        title: 'Noise and disturbance during works',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['noise', 'jackhammer', 'machine', 'drill', 'excavator', 'disturbance', 'equipment'],
+        issue: 'High-noise construction activity may require operational controls or scheduling precautions.',
+        recommendation: 'Document noisy operations, use maintained equipment, and plan work windows to reduce disturbance risk.',
+        riskWeight: 1,
+        snippet: 'Heavy equipment and demolition tools can trigger local noise-related compliance obligations or permit conditions.'
+      },
+      {
+        id: 'C7',
+        industry: 'Construction',
+        title: 'Stormwater and runoff management',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['runoff', 'stormwater', 'rain', 'soil', 'sediment', 'mud', 'water', 'drainage'],
+        issue: 'Runoff from soil, debris, or exposed materials may affect drainage and water protection requirements.',
+        recommendation: 'Use runoff barriers, sediment control, and protected storage for loose materials.',
+        riskWeight: 2,
+        snippet: 'Open construction areas can release sediment and polluted runoff into drainage systems during rainfall.'
+      },
+      {
+        id: 'C8',
+        industry: 'Construction',
+        title: 'Material recycling and recovery planning',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['recycle', 'recycling', 'recovery', 'metal', 'wood', 'material', 'reuse', 'salvage'],
+        issue: 'Recoverable construction materials may not be separated for recycling or reuse.',
+        recommendation: 'Identify recyclable materials before disposal and document recovery streams where possible.',
+        riskWeight: 2,
+        snippet: 'Construction projects often need better planning around the separation and recovery of recyclable materials.'
+      },
+      {
+        id: 'R1',
+        industry: 'Restaurant',
+        title: 'Food waste segregation and disposal',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['restaurant', 'kitchen', 'food', 'waste', 'cooking', 'leftovers', 'takeaway', 'scraps', 'organic'],
+        issue: 'Food waste handling may not be properly separated from other waste streams.',
+        recommendation: 'Create a food waste collection process and train staff on sorting procedures.',
+        riskWeight: 2,
+        snippet: 'Restaurants usually need a documented process for sorting food waste, packaging waste, and residual waste.'
+      },
+      {
+        id: 'R2',
+        industry: 'Restaurant',
+        title: 'Used oil and grease disposal',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['oil', 'grease', 'fryer', 'kitchen', 'drain', 'fat', 'restaurant', 'cooking', 'pan', 'deep', 'fried'],
+        issue: 'Used oil or grease disposal may create environmental and drainage compliance risks.',
+        recommendation: 'Store used oil safely and document pickup by an authorized collector.',
+        riskWeight: 3,
+        snippet: 'Cooking oil and grease should usually be collected separately and disposed of through authorized channels.'
+      },
+      {
+        id: 'R3',
+        industry: 'Restaurant',
+        title: 'Packaging and recycling documentation',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['packaging', 'plastic', 'paper', 'recycling', 'delivery', 'takeaway', 'restaurant', 'boxes', 'cups', 'containers'],
+        issue: 'Recycling and packaging waste records may be insufficient.',
+        recommendation: 'Track packaging waste streams and maintain service or disposal records.',
+        riskWeight: 2,
+        snippet: 'Takeaway and delivery operations often increase packaging waste obligations and recycling expectations.'
+      },
+      {
+        id: 'R4',
+        industry: 'Restaurant',
+        title: 'Wastewater and grease trap management',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['wastewater', 'grease', 'trap', 'drain', 'sink', 'water', 'cleaning', 'pipe'],
+        issue: 'Kitchen wastewater and grease trap maintenance may be poorly controlled or undocumented.',
+        recommendation: 'Schedule grease trap cleaning and keep maintenance records for wastewater control.',
+        riskWeight: 3,
+        snippet: 'Restaurant kitchens can trigger wastewater compliance issues when grease traps are not maintained or documented.'
+      },
+      {
+        id: 'R5',
+        industry: 'Restaurant',
+        title: 'Chemical storage for cleaning products',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['cleaner', 'cleaning', 'chemical', 'detergent', 'sanitizer', 'storage', 'bleach', 'disinfectant'],
+        issue: 'Cleaning chemicals may be stored without proper labeling or segregation.',
+        recommendation: 'Store cleaning products in labeled containers and separate them from food preparation areas.',
+        riskWeight: 2,
+        snippet: 'Restaurants using multiple cleaning agents may need stronger storage and labeling controls to reduce environmental risk.'
+      },
+      {
+        id: 'R6',
+        industry: 'Restaurant',
+        title: 'Glass, cardboard, and mixed recycling streams',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['glass', 'cardboard', 'bottles', 'paper', 'recycling', 'bins', 'sorting', 'delivery'],
+        issue: 'Glass, cardboard, and recyclable packaging may not be consistently separated from mixed waste.',
+        recommendation: 'Set up dedicated bins for glass, cardboard, and recyclable packaging with staff guidance.',
+        riskWeight: 1,
+        snippet: 'Busy restaurants often generate multiple recyclable waste streams that need better separation and handling routines.'
+      },
+      {
+        id: 'R7',
+        industry: 'Restaurant',
+        title: 'Refrigeration equipment and refrigerant risk',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['fridge', 'freezer', 'refrigerant', 'cooling', 'cold', 'equipment', 'leak'],
+        issue: 'Cooling equipment may present environmental risk if refrigerant maintenance is not controlled.',
+        recommendation: 'Keep maintenance records for refrigeration equipment and inspect for leaks or servicing gaps.',
+        riskWeight: 2,
+        snippet: 'Commercial cooling systems can create environmental compliance concerns when refrigerants are not properly maintained.'
+      },
+      {
+        id: 'R8',
+        industry: 'Restaurant',
+        title: 'Single-use takeaway material management',
+        source: 'Demo regulatory dataset',
+        region: 'EU/Germany demo',
+        keywords: ['single-use', 'takeaway', 'delivery', 'plastic', 'cups', 'forks', 'spoons', 'containers'],
+        issue: 'High use of disposable takeaway materials may increase packaging and waste compliance exposure.',
+        recommendation: 'Review single-use packaging volumes and track recyclable or lower-impact alternatives.',
+        riskWeight: 2,
+        snippet: 'Delivery-heavy restaurants often face greater packaging oversight because of high volumes of single-use materials.'
+      }
+    ];
+
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const industrySelect = document.getElementById('industry');
+    const descriptionInput = document.getElementById('description');
+    const riskLevel = document.getElementById('riskLevel');
+    const issuesList = document.getElementById('issuesList');
+    const recommendationsList = document.getElementById('recommendationsList');
+    const sourcesPanel = document.getElementById('sourcesPanel');
+
+    function tokenize(text) {
+      return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean);
+    }
+
+    function renderList(element, items) {
+      element.innerHTML = '';
+      items.forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        element.appendChild(li);
+      });
+    }
+
+    function renderSources(matches) {
+      sourcesPanel.innerHTML = '';
+      if (!matches.length) {
+        sourcesPanel.innerHTML = '<p class="empty-note">No relevant sources found in the current mini dataset.</p>';
+        return;
+      }
+
+      matches.forEach((rule) => {
+        const card = document.createElement('div');
+        card.className = 'source-card';
+        card.innerHTML = `
+          <div class="source-title">${rule.title}</div>
+          <div class="source-meta">Source: ${rule.source} | Region: ${rule.region} | Rule ID: ${rule.id}</div>
+          <p class="source-snippet">${rule.snippet}</p>
+        `;
+        sourcesPanel.appendChild(card);
+      });
+    }
+
+    function calculateRisk(totalWeight, matchesCount) {
+      if (matchesCount === 0) return 'Low';
+      if (totalWeight >= 7 || matchesCount >= 3) return 'High';
+      if (totalWeight >= 4 || matchesCount >= 2) return 'Medium';
+      return 'Low';
+    }
+
+    function analyzeCompliance() {
+      const industry = industrySelect.value;
+      const description = descriptionInput.value.trim();
+      const tokens = tokenize(description + ' ' + industry);
+
+      const scored = regulations
+        .filter(rule => rule.industry === industry)
+        .map(rule => {
+          const keywordHits = rule.keywords.filter(keyword => tokens.includes(keyword.toLowerCase())).length;
+          const fallbackHit = description.length > 0 ? 1 : 0;
+          return {
+            ...rule,
+            score: keywordHits + fallbackHit
+          };
+        })
+        .filter(rule => rule.score > 0)
+        .sort((a, b) => b.score - a.score || b.riskWeight - a.riskWeight)
+        .slice(0, 3);
+
+      const finalMatches = scored.length
+        ? scored
+        : regulations.filter(rule => rule.industry === industry).slice(0, 2);
+
+      const totalWeight = finalMatches.reduce((sum, rule) => sum + rule.riskWeight, 0);
+      const finalRisk = calculateRisk(totalWeight, finalMatches.length);
+
+      const issues = finalMatches.map(rule => rule.issue);
+      const recommendations = finalMatches.map(rule => rule.recommendation);
+
+      riskLevel.textContent = finalRisk;
+      renderList(issuesList, issues);
+      renderList(recommendationsList, recommendations);
+      renderSources(finalMatches);
+    }
+
+    analyzeBtn.addEventListener('click', analyzeCompliance);
+  </script>
+</body>
+</html>
