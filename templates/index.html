@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="GreenCompliance AI — Instantly analyze your business for environmental compliance risks. Free, AI-powered, instant results.">
+    <title>GreenCompliance AI — Environmental Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <!-- ── TOAST ── -->
+    <div id="toast" role="alert" aria-live="polite"></div>
+
+    <!-- ── HEADER ── -->
+    <header class="site-header">
+        <div class="inner flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+                <div class="logo-icon">
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-bold text-base text-gradient leading-none">GreenCompliance AI</p>
+                    <p class="text-xs text-gray-500 mt-0.5 hidden sm:block">Environmental Intelligence Platform</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="dot-ping"><span></span><i></i></div>
+                <span class="text-green-400 text-xs font-semibold">Live</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── HERO ── -->
+    <section class="inner pt-10 pb-6 text-center anim-fade">
+        <div class="hero-tag mb-4">✨ Free · AI-Powered · Instant Results · No Sign-up</div>
+        <h1 class="text-4xl sm:text-5xl font-black text-white leading-tight mb-3">
+            Is Your Business<br>
+            <span class="text-gradient">Environmentally Compliant?</span>
+        </h1>
+        <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
+            Describe what your business does — get an AI compliance score, detected risk issues,
+            and clear steps to fix them. Covers 8 industries.
+        </p>
+
+        <!-- Step pills -->
+        <div class="step-row mt-7">
+            <div class="step-pill active" id="step1">
+                <div class="step-num">1</div><span>Pick Industry</span>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step-pill" id="step2">
+                <div class="step-num">2</div><span>Describe Activity</span>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step-pill" id="step3">
+                <div class="step-num">3</div><span>Get Report</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── MAIN ── -->
+    <main class="inner pb-12">
+
+        <!-- INPUT CARD -->
+        <div class="card p-6 sm:p-8 mb-6 anim-fade" style="animation-delay:.06s">
+
+            <!-- STEP 1: Industry -->
+            <div class="section-label">
+                <div class="section-num">1</div>
+                <div>
+                    <p class="font-semibold text-white text-sm">Select your industry</p>
+                    <p class="text-xs text-gray-500 mt-0.5">Click a tile below</p>
+                </div>
+            </div>
+
+            <div class="industry-grid" id="industryGrid">
+                <button class="industry-btn active" data-val="Restaurant">🍽️<br><span>Restaurant</span></button>
+                <button class="industry-btn" data-val="Construction">🏗️<br><span>Construction</span></button>
+                <button class="industry-btn" data-val="Manufacturing">🏭<br><span>Manufacturing</span></button>
+                <button class="industry-btn" data-val="Agriculture">🌾<br><span>Agriculture</span></button>
+                <button class="industry-btn" data-val="Healthcare">🏥<br><span>Healthcare</span></button>
+                <button class="industry-btn" data-val="Retail">🛍️<br><span>Retail</span></button>
+                <button class="industry-btn" data-val="Technology">💻<br><span>Technology</span></button>
+                <button class="industry-btn" data-val="Transportation">🚛<br><span>Transportation</span></button>
+            </div>
+            <select id="industry" class="hidden">
+                <option>Restaurant</option>
+                <option>Construction</option>
+                <option>Manufacturing</option>
+                <option>Agriculture</option>
+                <option>Healthcare</option>
+                <option>Retail</option>
+                <option>Technology</option>
+                <option>Transportation</option>
+            </select>
+
+            <div class="section-divider"></div>
+
+            <!-- STEP 2: Description -->
+            <div class="section-label">
+                <div class="section-num">2</div>
+                <div class="flex-1">
+                    <p class="font-semibold text-white text-sm">Describe your business activity</p>
+                    <p class="text-xs text-gray-500 mt-0.5">More detail = better analysis</p>
+                </div>
+                <span id="charCount" class="text-gray-500 text-xs tabular-nums mt-0.5">0 / 500</span>
+            </div>
+
+            <!-- Example buttons: ALL 8 industries -->
+            <div class="mb-3">
+                <p class="text-xs text-gray-500 mb-2 font-medium">💡 Try a real example — click any to auto-fill:</p>
+                <div class="example-grid" id="exampleBtns">
+                    <button class="example-btn active-ex" data-ex="Restaurant">🍽️ Restaurant</button>
+                    <button class="example-btn" data-ex="Construction">🏗️ Construction</button>
+                    <button class="example-btn" data-ex="Manufacturing">🏭 Manufacturing</button>
+                    <button class="example-btn" data-ex="Agriculture">🌾 Agriculture</button>
+                    <button class="example-btn" data-ex="Healthcare">🏥 Healthcare</button>
+                    <button class="example-btn" data-ex="Retail">🛍️ Retail</button>
+                    <button class="example-btn" data-ex="Technology">💻 Technology</button>
+                    <button class="example-btn" data-ex="Transportation">🚛 Transportation</button>
+                </div>
+            </div>
+
+            <textarea id="description" class="field mb-3" rows="5" maxlength="500"
+                placeholder="Start typing or click an example above ↑&#10;&#10;E.g. 'We operate a restaurant that fries food daily and pour oil down the drain. We use styrofoam containers and have 4 refrigerators...'"></textarea>
+
+            <!-- Tips -->
+            <div class="tips-box mb-6">
+                <p class="text-xs font-semibold text-yellow-400 mb-1.5">✏️ Include these for a more accurate analysis:
+                </p>
+                <div class="tips-grid">
+                    <span class="tip-item">🗑️ How you dispose of waste</span>
+                    <span class="tip-item">⚗️ Any chemicals or solvents used</span>
+                    <span class="tip-item">💧 How you handle water / drains</span>
+                    <span class="tip-item">🔧 Machinery or heavy equipment</span>
+                    <span class="tip-item">📦 Packaging materials used</span>
+                    <span class="tip-item">🌬️ Any smoke, dust, or emissions</span>
+                </div>
+            </div>
+
+            <!-- STEP 3: Analyze -->
+            <div class="section-label mb-4">
+                <div class="section-num">3</div>
+                <p class="font-semibold text-white text-sm">Run the compliance check</p>
+            </div>
+
+            <button id="analyzeBtn" class="btn-primary">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+                Analyze Compliance Risks
+                <span class="btn-badge">Free · Instant</span>
+            </button>
+        </div>
+
+        <!-- LOADING -->
+        <div id="loadingSection" class="hidden mb-6">
+            <div class="card p-8 text-center">
+                <div class="loading-dots mx-auto mb-4"><span></span><span></span><span></span></div>
+                <p class="text-white font-semibold text-lg mb-1">Analyzing your business…</p>
+                <p class="text-gray-400 text-sm mb-5">AI is checking against environmental regulations</p>
+                <div class="loading-steps">
+                    <div class="loading-step" id="ls1">🔍 Scanning your description</div>
+                    <div class="loading-step" id="ls2">🤖 Running AI compliance analysis</div>
+                    <div class="loading-step" id="ls3">📋 Mapping to regulatory frameworks</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="resultsSection" class="hidden">
+
+            <!-- Result banner -->
+            <div class="result-banner mb-5">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-green-400 text-sm font-semibold">Analysis Complete</span>
+                    <span id="riskBadge" class="badge badge-low">🟢 Low Risk</span>
+                    <span id="sourceChip" class="src-chip src-rule">⚙️ Rule-Based</span>
+                </div>
+                <button id="downloadBtn" class="btn-outline">
+                    <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Download Report
+                </button>
+            </div>
+
+            <!-- ROW 1: Score + Risk -->
+            <div class="grid sm:grid-cols-2 gap-5 mb-5">
+                <!-- Score -->
+                <div class="card-accent p-6 glow-pulse">
+                    <p class="text-xs font-bold text-green-400 uppercase tracking-widest mb-0.5">Compliance Score</p>
+                    <p class="text-gray-500 text-xs mb-4">100 = Fully compliant with no issues</p>
+                    <div class="flex items-center gap-5">
+                        <div class="chart-wrap">
+                            <canvas id="scoreChart" width="150" height="150"></canvas>
+                            <div class="chart-center">
+                                <span id="scoreValue" class="text-4xl font-black text-white tabular-nums">—</span>
+                                <span class="text-gray-500 text-xs">/ 100</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5">
+                            <div class="score-leg"><span class="leg-dot green"></span>80–100 = ✅ Low</div>
+                            <div class="score-leg"><span class="leg-dot yellow"></span>50–79 = ⚠️ Medium</div>
+                            <div class="score-leg"><span class="leg-dot red"></span>0–49 = 🚨 High</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk breakdown -->
+                <div class="card p-6">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Risk Breakdown</p>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <span class="text-xs text-gray-400">Exposure Level</span>
+                        <span id="riskBadge2" class="badge badge-low text-xs">🟢 Low</span>
+                    </div>
+                    <div class="progress-track mb-5">
+                        <div id="riskProgressBar" class="progress-bar progress-low" style="width:0%"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="stat-card">
+                            <div id="issueCount" class="text-3xl font-black text-red-400 tabular-nums">0</div>
+                            <div class="text-gray-500 text-xs mt-1">⚠️ Issues Found</div>
+                        </div>
+                        <div class="stat-card">
+                            <div id="recCount" class="text-3xl font-black text-green-400 tabular-nums">0</div>
+                            <div class="text-gray-500 text-xs mt-1">✅ Recommendations</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issues -->
+            <div class="card p-6 mb-5">
+                <div class="sec-title">
+                    <div class="sec-icon red">⚠️</div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Issues Detected</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Environmental risks found in your business description
+                        </p>
+                    </div>
+                </div>
+                <div id="issuesList"></div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="card p-6 mb-5">
+                <div class="sec-title">
+                    <div class="sec-icon green">✅</div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">What You Should Do</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Actionable steps to improve your compliance score</p>
+                    </div>
+                </div>
+                <div id="recList"></div>
+            </div>
+
+            <!-- AI Insight -->
+            <div class="insight-box mb-5">
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="insight-icon">✨</div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">AI Expert Summary</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Written by Gemini 1.5 Flash AI based on your input</p>
+                    </div>
+                </div>
+                <p id="aiInsight" class="text-gray-300 leading-relaxed text-sm pl-1"></p>
+            </div>
+
+            <!-- Regulatory -->
+            <div class="card p-6 mb-5">
+                <div class="sec-title">
+                    <div class="sec-icon blue">📋</div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Regulatory Requirements</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Laws and environmental standards that apply to your
+                            business</p>
+                    </div>
+                </div>
+                <div id="regCards"></div>
+            </div>
+
+            <!-- Analyze again CTA -->
+            <div class="cta-box mb-8">
+                <span class="text-2xl">🔄</span>
+                <div class="flex-1">
+                    <p class="font-semibold text-white text-sm">Want to analyze something else?</p>
+                    <p class="text-gray-400 text-xs mt-0.5">Pick a different industry or update your description above
+                    </p>
+                </div>
+                <button onclick="scrollToInput()" class="btn-outline whitespace-nowrap">↑ Back to Top</button>
+            </div>
+
+        </div><!-- /results -->
+
+        <!-- HOW IT WORKS -->
+        <div class="card p-6 mb-8">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest text-center mb-5">How It Works</h3>
+            <div class="how-grid">
+                <div class="how-card">
+                    <div class="how-icon">📝</div>
+                    <h4 class="font-semibold text-white text-sm mb-1">1. Describe</h4>
+                    <p class="text-gray-400 text-xs">Tell us what your business does in plain language. No technical
+                        training needed.</p>
+                </div>
+                <div class="how-card">
+                    <div class="how-icon">🤖</div>
+                    <h4 class="font-semibold text-white text-sm mb-1">2. AI Analyzes</h4>
+                    <p class="text-gray-400 text-xs">Google Gemini AI reviews your activity against real environmental
+                        regulations.</p>
+                </div>
+                <div class="how-card">
+                    <div class="how-icon">📊</div>
+                    <h4 class="font-semibold text-white text-sm mb-1">3. Take Action</h4>
+                    <p class="text-gray-400 text-xs">Get a 0–100 compliance score, risk breakdown, and a step-by-step
+                        action plan.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="logo-icon" style="width:30px;height:30px;border-radius:.6rem;">
+                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <span class="text-gradient font-bold text-base">GreenCompliance AI</span>
+                </div>
+                <p class="footer-tagline">AI-Powered Environmental Compliance Assistant</p>
+
+                <div class="footer-rule"></div>
+
+                <p class="footer-copy">&copy; 2026 GreenCompliance AI. All Rights Reserved.</p>
+                <p class="footer-disclaimer">
+                    <svg class="footer-warn-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Informational only. Consult licensed environmental professionals for official compliance guidance.
+                </p>
+            </div>
+        </footer>
+
+    </main>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

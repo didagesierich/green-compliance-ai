@@ -1,0 +1,224 @@
+{
+  "regulations": [
+    {
+      "id": "R001",
+      "industry": "Restaurant",
+      "keywords": ["oil", "grease", "frying", "cooking oil", "drain"],
+      "issue": "Improper cooking oil / grease disposal",
+      "recommendation": "Use a licensed grease trap and authorized cooking-oil recycling service. Never pour oil down drains.",
+      "riskWeight": 4,
+      "regulation_title": "Grease & Oil Waste Regulation",
+      "regulatory_body": "EPA — 40 CFR Part 503",
+      "severity": "High"
+    },
+    {
+      "id": "R002",
+      "industry": "Restaurant",
+      "keywords": ["plastic", "packaging", "takeaway", "single-use", "styrofoam"],
+      "issue": "Single-use plastic & non-recyclable packaging waste",
+      "recommendation": "Switch to biodegradable / compostable packaging. Partner with a packaging waste recycler.",
+      "riskWeight": 3,
+      "regulation_title": "Packaging Waste Reduction Act",
+      "regulatory_body": "EPA — Resource Conservation",
+      "severity": "Medium"
+    },
+    {
+      "id": "R003",
+      "industry": "Restaurant",
+      "keywords": ["refrigerant", "cooling", "freon", "HVAC", "refrigeration"],
+      "issue": "Refrigerant leaks contributing to ozone depletion",
+      "recommendation": "Schedule annual HVAC inspections. Use certified technicians for refrigerant handling.",
+      "riskWeight": 3,
+      "regulation_title": "Section 608 of the Clean Air Act",
+      "regulatory_body": "EPA — Clean Air Act",
+      "severity": "Medium"
+    },
+    {
+      "id": "R004",
+      "industry": "Restaurant",
+      "keywords": ["food waste", "waste", "compost", "landfill", "organic"],
+      "issue": "Excessive food waste sent to landfill",
+      "recommendation": "Implement composting program and partner with food-rescue organizations to donate surplus.",
+      "riskWeight": 2,
+      "regulation_title": "Food Waste Reduction Act",
+      "regulatory_body": "USDA / EPA Joint Program",
+      "severity": "Low"
+    },
+    {
+      "id": "R005",
+      "industry": "Construction",
+      "keywords": ["dust", "particulate", "air quality", "emission", "concrete cutting"],
+      "issue": "Airborne dust and particulate matter from construction activities",
+      "recommendation": "Use dust suppression systems, enclose work areas, and monitor PM2.5 / PM10 levels.",
+      "riskWeight": 4,
+      "regulation_title": "Construction Dust Control Standard",
+      "regulatory_body": "EPA — Clean Air Act NAAQS",
+      "severity": "High"
+    },
+    {
+      "id": "R006",
+      "industry": "Construction",
+      "keywords": ["waste", "debris", "concrete", "wood", "metal", "demolition"],
+      "issue": "Construction & demolition waste not properly segregated or recycled",
+      "recommendation": "Separate concrete, wood, metal, and hazardous materials. Use certified C&D waste recyclers.",
+      "riskWeight": 3,
+      "regulation_title": "Construction Waste Management Rule",
+      "regulatory_body": "EPA — RCRA Subtitle D",
+      "severity": "Medium"
+    },
+    {
+      "id": "R007",
+      "industry": "Construction",
+      "keywords": ["stormwater", "runoff", "erosion", "sediment", "rain"],
+      "issue": "Stormwater runoff contaminating nearby water bodies",
+      "recommendation": "Install silt fences, sediment traps, and erosion control blankets on disturbed soil areas.",
+      "riskWeight": 4,
+      "regulation_title": "NPDES Stormwater Construction Permit",
+      "regulatory_body": "EPA — Clean Water Act",
+      "severity": "High"
+    },
+    {
+      "id": "R008",
+      "industry": "Construction",
+      "keywords": ["asbestos", "lead", "hazardous", "chemical", "solvent"],
+      "issue": "Hazardous material (asbestos / lead) exposure during demolition",
+      "recommendation": "Conduct pre-demolition hazardous material survey. Use licensed remediation contractors.",
+      "riskWeight": 5,
+      "regulation_title": "NESHAP Asbestos Standard",
+      "regulatory_body": "EPA / OSHA Joint Standard",
+      "severity": "Critical"
+    },
+    {
+      "id": "R009",
+      "industry": "Manufacturing",
+      "keywords": ["emission", "smoke", "chimney", "exhaust", "air", "pollutant"],
+      "issue": "Uncontrolled air emissions exceeding permitted limits",
+      "recommendation": "Install scrubbers or filters on emission sources. Conduct quarterly stack emission testing.",
+      "riskWeight": 5,
+      "regulation_title": "Clean Air Act Title V Operating Permit",
+      "regulatory_body": "EPA — Clean Air Act",
+      "severity": "Critical"
+    },
+    {
+      "id": "R010",
+      "industry": "Manufacturing",
+      "keywords": ["chemical", "hazardous waste", "disposal", "solvent", "toxic"],
+      "issue": "Improper hazardous chemical and waste disposal",
+      "recommendation": "Use EPA-licensed hazardous waste disposal contractors. Maintain MSDS records on-site.",
+      "riskWeight": 5,
+      "regulation_title": "RCRA Hazardous Waste Management",
+      "regulatory_body": "EPA — RCRA Subtitle C",
+      "severity": "Critical"
+    },
+    {
+      "id": "R011",
+      "industry": "Manufacturing",
+      "keywords": ["water", "discharge", "wastewater", "effluent", "stream"],
+      "issue": "Industrial wastewater discharge without proper treatment",
+      "recommendation": "Install on-site wastewater treatment. Apply for NPDES discharge permit before releasing any effluent.",
+      "riskWeight": 4,
+      "regulation_title": "Industrial Wastewater Discharge Standard",
+      "regulatory_body": "EPA — Clean Water Act CWA 402",
+      "severity": "High"
+    },
+    {
+      "id": "R012",
+      "industry": "Agriculture",
+      "keywords": ["pesticide", "herbicide", "fertilizer", "chemical", "spray"],
+      "issue": "Overuse of pesticides and herbicides contaminating soil and groundwater",
+      "recommendation": "Adopt Integrated Pest Management (IPM). Use buffer zones near water bodies.",
+      "riskWeight": 4,
+      "regulation_title": "FIFRA Pesticide Use Regulation",
+      "regulatory_body": "EPA — FIFRA",
+      "severity": "High"
+    },
+    {
+      "id": "R013",
+      "industry": "Agriculture",
+      "keywords": ["manure", "livestock", "animal waste", "runoff", "nitrate"],
+      "issue": "Animal waste runoff causing water body eutrophication",
+      "recommendation": "Implement manure management plans. Install vegetative buffers around animal housing areas.",
+      "riskWeight": 4,
+      "regulation_title": "CAFO Nutrient Management Regulation",
+      "regulatory_body": "EPA — Clean Water Act CAFO Rule",
+      "severity": "High"
+    },
+    {
+      "id": "R014",
+      "industry": "Healthcare",
+      "keywords": ["medical waste", "biohazard", "sharps", "disposal", "infectious"],
+      "issue": "Improper disposal of medical and biohazardous waste",
+      "recommendation": "Use licensed medical waste disposal services. Segregate sharps, infectious, and chemical waste.",
+      "riskWeight": 5,
+      "regulation_title": "Medical Waste Tracking Act",
+      "regulatory_body": "EPA / State Health Dept.",
+      "severity": "Critical"
+    },
+    {
+      "id": "R015",
+      "industry": "Healthcare",
+      "keywords": ["chemical", "pharmaceutical", "drug", "disinfectant", "mercury"],
+      "issue": "Improper disposal of pharmaceutical and chemical waste",
+      "recommendation": "Enroll in DEA take-back program. Use licensed pharmaceutical waste handlers.",
+      "riskWeight": 4,
+      "regulation_title": "DEA Pharmaceutical Waste Disposal Rule",
+      "regulatory_body": "DEA / EPA",
+      "severity": "High"
+    },
+    {
+      "id": "R016",
+      "industry": "Retail",
+      "keywords": ["plastic bag", "plastic", "packaging", "waste", "single-use"],
+      "issue": "Excessive plastic bag and single-use packaging distribution",
+      "recommendation": "Offer reusable bag alternatives. Partner with packaging manufacturer for take-back programs.",
+      "riskWeight": 2,
+      "regulation_title": "Plastic Bag Reduction Ordinance",
+      "regulatory_body": "State / Municipal Ordinance",
+      "severity": "Low"
+    },
+    {
+      "id": "R017",
+      "industry": "Retail",
+      "keywords": ["energy", "electricity", "refrigerator", "lighting", "HVAC"],
+      "issue": "High energy consumption contributing to carbon emissions",
+      "recommendation": "Switch to LED lighting. Upgrade to Energy Star-rated refrigeration units. Install smart thermostats.",
+      "riskWeight": 2,
+      "regulation_title": "Energy Efficiency Standards",
+      "regulatory_body": "DOE — Energy Star Program",
+      "severity": "Low"
+    },
+    {
+      "id": "R018",
+      "industry": "Technology",
+      "keywords": ["e-waste", "electronics", "battery", "computer", "server", "device"],
+      "issue": "Electronic waste disposal violating e-waste regulations",
+      "recommendation": "Use certified e-waste recyclers (R2/e-Stewards certified). Track asset disposition records.",
+      "riskWeight": 3,
+      "regulation_title": "E-Waste Recycling Act",
+      "regulatory_body": "State E-Waste Program / EPA",
+      "severity": "Medium"
+    },
+    {
+      "id": "R019",
+      "industry": "Technology",
+      "keywords": ["cooling", "data center", "water", "energy", "power"],
+      "issue": "High PUE data center operations wasting energy and water",
+      "recommendation": "Optimize cooling systems. Target PUE below 1.5. Consider renewable energy sourcing.",
+      "riskWeight": 3,
+      "regulation_title": "Federal Data Center Energy Efficiency",
+      "regulatory_body": "DOE / EPA",
+      "severity": "Medium"
+    },
+    {
+      "id": "R020",
+      "industry": "Transportation",
+      "keywords": ["fuel", "diesel", "emission", "vehicle", "exhaust", "fleet"],
+      "issue": "Vehicle fleet emissions exceeding EPA emission standards",
+      "recommendation": "Transition to EVs or CNG vehicles. Conduct annual fleet emission checks.",
+      "riskWeight": 4,
+      "regulation_title": "Clean Air Act — Mobile Source Emission",
+      "regulatory_body": "EPA — MOBILE6 Standards",
+      "severity": "High"
+    }
+  ]
+}
